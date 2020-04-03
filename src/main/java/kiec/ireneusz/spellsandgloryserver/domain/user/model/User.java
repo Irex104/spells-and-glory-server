@@ -1,7 +1,5 @@
-package kiec.ireneusz.spellsandgloryserver.domain.user;
+package kiec.ireneusz.spellsandgloryserver.domain.user.model;
 
-import kiec.ireneusz.spellsandgloryserver.domain.camp.Camp;
-import kiec.ireneusz.spellsandgloryserver.domain.character.model.Hero;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.UserApi;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.UserUpdateApi;
 import kiec.ireneusz.spellsandgloryserver.enums.Gender;
@@ -11,12 +9,9 @@ import kiec.ireneusz.spellsandgloryserver.utils.AbstractModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 @Table(schema = "public", name = "users")
@@ -38,8 +33,8 @@ public class User extends AbstractModel {
     private String mail;
     @NotNull
     private String username;
-    @NotNull
-    private String password;
+//    @NotNull
+//    private String password;
     private String description;
     @NotNull
     private String image;
@@ -58,22 +53,22 @@ public class User extends AbstractModel {
     @Column(name = "premium_coins", nullable = false)
     private Long premiumCoins;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            schema = "public", name = "heroes2user",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "hero_id")
-    )
-    private List<Hero> heroes;
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            schema = "public", name = "camp2user",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "camp_id")
-    )
-    private List<Camp> camps;
+//    @ManyToMany(cascade = CascadeType.PERSIST)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @JoinTable(
+//            schema = "public", name = "heroes2user",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "hero_id")
+//    )
+//    private List<Hero> heroes;
+//    @ManyToMany(cascade = CascadeType.PERSIST)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @JoinTable(
+//            schema = "public", name = "camp2user",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "camp_id")
+//    )
+//    private List<Camp> camps;
 
     public User(UserApi api) {
         this.role = Role.USER;

@@ -1,4 +1,4 @@
-package kiec.ireneusz.spellsandgloryserver.domain.character.dto;
+package kiec.ireneusz.spellsandgloryserver.domain.user.dto;
 
 import kiec.ireneusz.spellsandgloryserver.enums.Profession;
 import lombok.AllArgsConstructor;
@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MonsterApi{
+public class HeroApi{
 
+    private Long userId;
     private String name;
     private String description;
-    private Profession character;
+    private Profession profession;
     private String image;
 
 }

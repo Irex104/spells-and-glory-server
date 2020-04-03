@@ -1,4 +1,4 @@
-package kiec.ireneusz.spellsandgloryserver.domain.item.dto;
+package kiec.ireneusz.spellsandgloryserver.domain.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

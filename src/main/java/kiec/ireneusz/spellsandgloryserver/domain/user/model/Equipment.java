@@ -1,6 +1,6 @@
-package kiec.ireneusz.spellsandgloryserver.domain.item.model;
+package kiec.ireneusz.spellsandgloryserver.domain.user.model;
 
-import kiec.ireneusz.spellsandgloryserver.domain.item.dto.ItemApi;
+import kiec.ireneusz.spellsandgloryserver.domain.user.dto.ItemApi;
 import kiec.ireneusz.spellsandgloryserver.enums.ItemType;
 import kiec.ireneusz.spellsandgloryserver.enums.Profession;
 import kiec.ireneusz.spellsandgloryserver.utils.AbstractModel;

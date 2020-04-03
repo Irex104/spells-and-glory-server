@@ -1,10 +1,13 @@
 package kiec.ireneusz.spellsandgloryserver.utils;
 
-import kiec.ireneusz.spellsandgloryserver.domain.user.User;
+import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroDTO;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.UserDTO;
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.Hero;
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.User;
 
 public class Mapper {
 
+    //region USER
     public static UserDTO toUserDTO(User user/*, List<HeroDTO> heroDTOs, List<CampDTO> campDTOs*/){
         return new UserDTO().builder()
                 .id(user.getId())
@@ -35,5 +38,20 @@ public class Mapper {
                 .level(user.getLevel())
                 .build();
     }
+    //endregion
+
+    //region HERO
+        public static HeroDTO toHeroDTOSimple(Hero hero){
+            return new HeroDTO().builder()
+                    .id(hero.getId())
+                    .name(hero.getName())
+                    .description(hero.getDescription())
+                    .profession(hero.getProfession())
+                    .image(hero.getImage())
+                    .level(hero.getLevel())
+                    .build();
+        }
+    //endregion
+
 
 }

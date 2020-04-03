@@ -2,11 +2,14 @@ package kiec.ireneusz.spellsandgloryserver.domain.user;
 
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.UserApi;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.UserUpdateApi;
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.User;
 import kiec.ireneusz.spellsandgloryserver.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,7 +22,9 @@ public class UserService {
     }
 
     List<User> getAll() {
-        return repository.findAllByDeletedAtIsNull();
+        return repository.findAllByDeletedAtIsNull().stream()
+                .sorted(Comparator.comparing(User::getLevel))
+                .collect(Collectors.toList());
     }
 
 
@@ -29,11 +34,15 @@ public class UserService {
     }
 
     List<User> getByMail(String mail) {
-        return repository.findByMailLikeAndDeletedAtIsNull("%"+mail+"%");
+        return repository.findByMailLikeAndDeletedAtIsNull("%"+mail+"%").stream()
+                .sorted(Comparator.comparing(User::getLevel))
+                .collect(Collectors.toList());
     }
 
     List<User> getByUsername(String username) {
-        return repository.findByUsernameLikeAndDeletedAtIsNull("%"+username+"%");
+        return repository.findByUsernameLikeAndDeletedAtIsNull("%"+username+"%").stream()
+                .sorted(Comparator.comparing(User::getLevel))
+                .collect(Collectors.toList());
     }
 
     User create(UserApi api) {

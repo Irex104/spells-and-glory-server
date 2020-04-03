@@ -1,7 +1,7 @@
-package kiec.ireneusz.spellsandgloryserver.domain.item.dto;
+package kiec.ireneusz.spellsandgloryserver.domain.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import kiec.ireneusz.spellsandgloryserver.domain.item.model.Item;
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.Item;
 import kiec.ireneusz.spellsandgloryserver.enums.ItemType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package kiec.ireneusz.spellsandgloryserver.domain.item.dto;
+package kiec.ireneusz.spellsandgloryserver.domain.user.dto;
 
 import kiec.ireneusz.spellsandgloryserver.enums.ItemType;
 import lombok.AllArgsConstructor;

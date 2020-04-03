@@ -1,8 +1,7 @@
-package kiec.ireneusz.spellsandgloryserver.domain.character.model;
+package kiec.ireneusz.spellsandgloryserver.domain.user.model;
 
-import kiec.ireneusz.spellsandgloryserver.domain.character.dto.HeroApi;
-import kiec.ireneusz.spellsandgloryserver.domain.item.model.Backpack;
-import kiec.ireneusz.spellsandgloryserver.domain.item.model.Equipment;
+import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroApi;
+import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroUpdateApi;
 import kiec.ireneusz.spellsandgloryserver.enums.Profession;
 import kiec.ireneusz.spellsandgloryserver.utils.AbstractModel;
 import lombok.AllArgsConstructor;
@@ -23,6 +22,9 @@ public class Hero extends AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     @NotNull
     private String name;
     private String description;
@@ -59,11 +61,14 @@ public class Hero extends AbstractModel {
     @Column(name = "armour_strength", nullable = false)
     private Long armourStrength;
 
+
+    //TODO refactor backpack and equipment to JoinColumn because of machine hash code in database, reset DB and delete all rows
     private Equipment equipment;
     private Backpack backpack;
     //TODO think about another attributes
 
-    public Hero(HeroApi api){
+    public Hero(User user, HeroApi api){
+        this.user = user;
         this.name = api.getName();
         this.description = api.getDescription();
         this.profession = api.getProfession();
@@ -104,16 +109,21 @@ public class Hero extends AbstractModel {
         }
     }
 
-    protected void defend(Long opponentAttack){
+    protected void defend(Long opponentHitStrength){
         Long block = (long)(Math.random() * this.armourStrength);
         if(new Random().nextInt((int) (100 - this.lucky + 1)) < this.lucky){
-            if (opponentAttack>block*2)
-                this.healthPoints -= opponentAttack - block*2;
+            if (opponentHitStrength>block*2)
+                this.healthPoints -= opponentHitStrength - block*2;
         }else{
-            if (opponentAttack>block)
-                this.healthPoints -= opponentAttack - block;
+            if (opponentHitStrength>block)
+                this.healthPoints -= opponentHitStrength - block;
         }
     }
 
 
+    public void update(HeroUpdateApi api) {
+        this.name = api.getName();
+        this.description = api.getDescription();
+        this.image = api.getImage();
+    }
 }

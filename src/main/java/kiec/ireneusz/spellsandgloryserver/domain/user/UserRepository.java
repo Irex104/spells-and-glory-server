@@ -1,5 +1,6 @@
 package kiec.ireneusz.spellsandgloryserver.domain.user;
 
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
