@@ -29,9 +29,9 @@ public class User extends AbstractModel {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String mail;
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String username;
 //    @NotNull
 //    private String password;

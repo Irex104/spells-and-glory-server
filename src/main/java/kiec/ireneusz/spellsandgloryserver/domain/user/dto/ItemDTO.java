@@ -18,6 +18,7 @@ public class ItemDTO {
     private Long id;
     private String name;
     private String description;
+    private String image;
     private ItemType itemType;
     private Long salePrice;
     private Long purchasePrice;
@@ -35,6 +36,7 @@ public class ItemDTO {
     public ItemDTO(Item item) {
         this.id = item.getId();
         this.name = item.getName();
+        this.image = item.getImage();
         this.description = item.getDescription();
         this.itemType = item.getItemType();
         this.salePrice = item.getSalePrice();

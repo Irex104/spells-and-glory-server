@@ -3,9 +3,11 @@ package kiec.ireneusz.spellsandgloryserver.api;
 import io.swagger.annotations.Api;
 import kiec.ireneusz.spellsandgloryserver.domain.generator.GeneratorFacade;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroDTO;
+import kiec.ireneusz.spellsandgloryserver.domain.user.dto.ItemDTO;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.UserDTO;
 import kiec.ireneusz.spellsandgloryserver.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +30,17 @@ public class GeneratorController {
 
     @GetMapping("/generateUsers")
     public ResponseEntity<List<UserDTO>> generateUsers(){
-        return ResponseEntity.ok(generatorFacade.generateUsers());
+        return ResponseEntity.status(HttpStatus.CREATED).body(generatorFacade.generateUsers());
     }
 
     @GetMapping("/generateHeroes")
     public ResponseEntity<List<HeroDTO>> generateHeroes() throws UserNotFoundException {
-        return ResponseEntity.ok(generatorFacade.generateHeroes());
+        return ResponseEntity.status(HttpStatus.CREATED).body(generatorFacade.generateHeroes());
     }
+
+    @GetMapping("/generateItems")
+    public ResponseEntity<List<ItemDTO>> generateItems() {
+        return ResponseEntity.status(HttpStatus.CREATED).body(generatorFacade.generateItems());
+    }
+
 }

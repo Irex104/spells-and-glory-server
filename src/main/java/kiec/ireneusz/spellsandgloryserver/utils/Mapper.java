@@ -1,8 +1,12 @@
 package kiec.ireneusz.spellsandgloryserver.utils;
 
+import kiec.ireneusz.spellsandgloryserver.domain.user.dto.EquipmentDTO;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroDTO;
+import kiec.ireneusz.spellsandgloryserver.domain.user.dto.ItemDTO;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.UserDTO;
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.Equipment;
 import kiec.ireneusz.spellsandgloryserver.domain.user.model.Hero;
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.Item;
 import kiec.ireneusz.spellsandgloryserver.domain.user.model.User;
 
 public class Mapper {
@@ -53,5 +57,24 @@ public class Mapper {
         }
     //endregion
 
+    //region ITEM
+    public static ItemDTO toItemDTOSimple(Item item){
+        return new ItemDTO().builder()
+                .id(item.getId())
+                .name(item.getName())
+                .image(item.getImage())
+                .build();
+    }
+    //endregion
+
+    //region EQUIPMENT
+    public static EquipmentDTO toEquipmentDTOSimple(Equipment equipment){
+        return new EquipmentDTO().builder()
+                .id(equipment.getId())
+                .heroId(equipment.getHero().getId())
+                .heroName(equipment.getHero().getName())
+                .build();
+    }
+    //endregion
 
 }

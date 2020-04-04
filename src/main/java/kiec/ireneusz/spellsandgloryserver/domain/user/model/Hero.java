@@ -25,7 +25,7 @@ public class Hero extends AbstractModel {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
     private String description;
     @NotNull
@@ -61,10 +61,6 @@ public class Hero extends AbstractModel {
     @Column(name = "armour_strength", nullable = false)
     private Long armourStrength;
 
-
-    //TODO refactor backpack and equipment to JoinColumn because of machine hash code in database, reset DB and delete all rows
-    private Equipment equipment;
-    private Backpack backpack;
     //TODO think about another attributes
 
     public Hero(User user, HeroApi api){
@@ -96,8 +92,6 @@ public class Hero extends AbstractModel {
         }
         this.lucky = 25L;
         this.armourStrength = 0L;
-        this.equipment = new Equipment(api.getProfession());
-        this.backpack = new Backpack();
     }
 
     public Long attack(){

@@ -1,8 +1,5 @@
 package kiec.ireneusz.spellsandgloryserver.domain.user.model;
 
-import kiec.ireneusz.spellsandgloryserver.domain.user.dto.ItemApi;
-import kiec.ireneusz.spellsandgloryserver.enums.ItemType;
-import kiec.ireneusz.spellsandgloryserver.enums.Profession;
 import kiec.ireneusz.spellsandgloryserver.utils.AbstractModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +19,20 @@ public class Equipment extends AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "hero_id", nullable = false)
+    private Hero hero;
+
+//    @ManyToMany(cascade = CascadeType.PERSIST)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @JoinTable(
+//            schema = "public", name = "heroes2user",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "hero_id")
+//    )
+//    private HashMap<ItemType, Item> items = new HashMap();
+//TODO it might be better idea that that shit down
 
     @ManyToOne
     @JoinColumn(name = "helmet_id")
@@ -53,59 +64,8 @@ public class Equipment extends AbstractModel {
     @JoinColumn(name = "shield_id")
     private Item shield;
 
-    public Equipment(Profession profession){
-        if (profession.name().equals("Warrior")){
-            this.weapon = new Item(new ItemApi(
-                    "First Sword",
-                    "The worst sword",
-                    ItemType.Sword,
-                    10L,
-                    30L,
-                    1L,
-                    3L,
-                    6L,
-                    0L,
-                    0L,
-                    5L,
-                    0L,
-                    0L,
-                    0L
-            ));
-        }else  if (profession.name().equals("Hunter")){
-            this.weapon = new Item(new ItemApi(
-                    "First Bow",
-                    "The worst bow",
-                    ItemType.Bow,
-                    10L,
-                    30L,
-                    1L,
-                    3L,
-                    6L,
-                    0L,
-                    0L,
-                    0L,
-                    5L,
-                    0L,
-                    0L
-            ));
-        }else  if (profession.name().equals("Wizard")){
-            this.weapon = new Item(new ItemApi(
-                    "First Wand",
-                    "The worst wand",
-                    ItemType.Wand,
-                    10L,
-                    30L,
-                    1L,
-                    3L,
-                    6L,
-                    0L,
-                    0L,
-                    0L,
-                    0L,
-                    5L,
-                    0L
-            ));
-        }
+    public Equipment(Hero hero){
+        this.hero = hero;
     }
 
 }

@@ -12,6 +12,7 @@ public class ItemApi {
 
     private String name;
     private String description;
+    private String image;
     private ItemType itemType;
     private Long salePrice;
     private Long purchasePrice;

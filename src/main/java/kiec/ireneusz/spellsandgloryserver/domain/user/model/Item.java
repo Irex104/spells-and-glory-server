@@ -20,9 +20,18 @@ public class Item extends AbstractModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+
+
+    //TODO does it really have to be unique value ?!
+    //   ||        ||          ||
+    //  \ /       \ /         \ /
+
+    @Column(nullable = false, unique = true)
     private String name;
+
     private String description;
+    @NotNull
+    private String image;
     @Column(name = "item_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private ItemType itemType;
@@ -53,6 +62,25 @@ public class Item extends AbstractModel {
     public Item(ItemApi api) {
         this.name = api.getName();
         this.description = api.getDescription();
+        this.image = api.getImage();
+        this.itemType = api.getItemType();
+        this.salePrice = api.getSalePrice();
+        this.purchasePrice = api.getPurchasePrice();
+        this.premiumCoinsPurchasePrice = api.getPremiumCoinsPurchasePrice();
+        this.lowerCompartmentHit = api.getLowerCompartmentHit();
+        this.upperCompartmentHit = api.getUpperCompartmentHit();
+        this.armourStrength = api.getArmourStrength();
+        this.maxHealthPoints = api.getMaxHealthPoints();
+        this.strength = api.getStrength();
+        this.dexterity = api.getDexterity();
+        this.intelligence = api.getIntelligence();
+        this.lucky = api.getLucky();
+    }
+
+    public void update(ItemApi api) {
+        this.name = api.getName();
+        this.description = api.getDescription();
+        this.image = api.getImage();
         this.itemType = api.getItemType();
         this.salePrice = api.getSalePrice();
         this.purchasePrice = api.getPurchasePrice();

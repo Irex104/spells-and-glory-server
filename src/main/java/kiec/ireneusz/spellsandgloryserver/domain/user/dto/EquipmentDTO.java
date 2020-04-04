@@ -16,6 +16,9 @@ public class EquipmentDTO {
 
     private Long id;
 
+    private Long heroId;
+    private String heroName;
+
     private Long helmetId;
     private String helmetName;
     private Long armorId;
@@ -39,6 +42,8 @@ public class EquipmentDTO {
 
     public EquipmentDTO(Equipment equipment) {
         this.id = equipment.getId();
+        this.helmetId = equipment.getHero().getId();
+        this.helmetName = equipment.getHero().getName();
         this.helmetId = equipment.getHelmet().getId();
         this.helmetName = equipment.getHelmet().getName();
         this.armorId = equipment.getArmor().getId();
