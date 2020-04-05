@@ -66,11 +66,21 @@ public class ItemService {
         Item firstItem;
         if (hero.getProfession().name().equals("Warrior")){
             firstItem = getByName("First Sword");
+            System.out.println(firstItem);
         }else  if (hero.getProfession().name().equals("Hunter")){
             firstItem = getByName("First Bow");
+            System.out.println(firstItem);
         }else  /*if (hero.getProfession().name().equals("Wizard"))*/{
             firstItem = getByName("First Wand");
+            System.out.println(firstItem);
         }
+//        if (hero.getProfession().name().equals("Warrior")){
+//            firstItem = getByName("First Sword");
+//        }else  if (hero.getProfession().name().equals("Hunter")){
+//            firstItem = getByName("First Bow");
+//        }else  /*if (hero.getProfession().name().equals("Wizard"))*/{
+//            firstItem = getByName("First Wand");
+//        }
         return firstItem;
     }
 }

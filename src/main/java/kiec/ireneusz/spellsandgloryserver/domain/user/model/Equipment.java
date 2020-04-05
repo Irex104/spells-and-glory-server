@@ -24,14 +24,13 @@ public class Equipment extends AbstractModel {
     @JoinColumn(name = "hero_id", nullable = false)
     private Hero hero;
 
-//    @ManyToMany(cascade = CascadeType.PERSIST)
-//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @ManyToMany
 //    @JoinTable(
-//            schema = "public", name = "heroes2user",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "hero_id")
-//    )
-//    private HashMap<ItemType, Item> items = new HashMap();
+//        name="AuthorBookGroup",
+//        joinColumns={@JoinColumn(name="fk_equipment", referencedColumnName="id")},
+//        inverseJoinColumns={@JoinColumn(name="fk_items", referencedColumnName="id")})
+//    @MapKey(name = "title")
+//    private HashMap<ItemType, Item> items = new HashMap<>();
 //TODO it might be better idea that that shit down
 
     @ManyToOne

@@ -2,6 +2,7 @@ package kiec.ireneusz.spellsandgloryserver.domain.generator;
 
 import kiec.ireneusz.spellsandgloryserver.domain.user.UserFacade;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.*;
+import kiec.ireneusz.spellsandgloryserver.exception.ItemNotFoundException;
 import kiec.ireneusz.spellsandgloryserver.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class GeneratorFacade {
         return userDTOs;
     }
 
-    public List<HeroDTO> generateHeroes() throws UserNotFoundException {
+    public List<HeroDTO> generateHeroes() throws UserNotFoundException, ItemNotFoundException {
         List<HeroDTO> heroDTOs = new ArrayList<>();
         for(HeroApi heroApi: generatorHeroService.getHeroApis())
             heroDTOs.add(userFacade.createHero(heroApi));

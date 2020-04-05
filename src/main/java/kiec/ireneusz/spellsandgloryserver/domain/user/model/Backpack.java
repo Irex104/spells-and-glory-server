@@ -3,6 +3,7 @@ package kiec.ireneusz.spellsandgloryserver.domain.user.model;
 import kiec.ireneusz.spellsandgloryserver.utils.AbstractModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @Table(schema = "public", name = "backpacks")
 @Getter
 @AllArgsConstructor
+@ToString
 public class Backpack extends AbstractModel {
 
     @Id
@@ -24,7 +26,7 @@ public class Backpack extends AbstractModel {
     @ManyToMany(cascade = CascadeType.PERSIST)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
-            schema = "public", name = "items2backpack",
+            schema = "public", name = "item2backpack",
             joinColumns = @JoinColumn(name = "backpack_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id")
     )

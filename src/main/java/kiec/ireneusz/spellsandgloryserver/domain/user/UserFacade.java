@@ -1,6 +1,7 @@
 package kiec.ireneusz.spellsandgloryserver.domain.user;
 
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.*;
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.Backpack;
 import kiec.ireneusz.spellsandgloryserver.domain.user.model.Hero;
 import kiec.ireneusz.spellsandgloryserver.domain.user.model.Item;
 import kiec.ireneusz.spellsandgloryserver.domain.user.model.User;
@@ -24,6 +25,7 @@ public class UserFacade {
     private final ItemService itemService;
     private final EquipmentService equipmentService;
     private final BackpackService backpackService;
+    private final Item2BackpackService item2BackpackService;
 
     @Autowired
     public UserFacade(
@@ -31,13 +33,15 @@ public class UserFacade {
             HeroService heroService,
             ItemService itemService,
             EquipmentService equipmentService,
-            BackpackService backpackService
+            BackpackService backpackService,
+            Item2BackpackService item2BackpackService
     ) {
         this.userService = userService;
         this.heroService = heroService;
         this.itemService = itemService;
         this.equipmentService = equipmentService;
         this.backpackService = backpackService;
+        this.item2BackpackService = item2BackpackService;
     }
 
     //region USER
@@ -103,7 +107,8 @@ public class UserFacade {
         Hero hero = heroService.create(user, api);
         equipmentService.create(hero);
         Item firstItem = itemService.getFirstItem(hero);
-        backpackService.create(hero, firstItem);
+        Backpack backpack = backpackService.create(hero);
+        item2BackpackService.addItemToBackpack(backpack, firstItem);
         return new HeroDTO(hero);
     }
 
@@ -131,6 +136,12 @@ public class UserFacade {
                 .collect(Collectors.toList());
     }
 
+//    @ManyToMany
+//    @JoinTable(
+//            name="AuthorBookGroup",
+//            joinColumns={@JoinColumn(name="fk_author", referencedColumnName="id")},
+//            inverseJoinColumns={@JoinColumn(name="fk_group", referencedColumnName="id")})
+//    @MapKey(name = "title")
 //    public List<ItemDTO> getItemsByPrice(Long lowestPrice, Long highestPrice) {
 //        return itemService.getByPrice(lowestPrice, highestPrice).stream().map(Mapper::toItemDTOSimple)
 //                .collect(Collectors.toList());
@@ -163,11 +174,21 @@ public class UserFacade {
         return new EquipmentDTO(equipmentService.getByHero(hero));
     }
 
-    public EquipmentDTO wearItem(Long heroId, Long itemId) throws HeroNotFoudException, EquipmentNotFoundException, ItemNotFoundException {
+    public ItemDTO wearItem(Long heroId, Long itemId) throws HeroNotFoudException, EquipmentNotFoundException, ItemNotFoundException {
         Hero hero = heroService.getOne(heroId);
         Item item = itemService.getOne(itemId);
-        return new EquipmentDTO(equipmentService.wearItem(hero, item));
+        return new ItemDTO(equipmentService.wearItem(hero, item));
     }
+
+    public ItemDTO takeOfItem(Long heroId, Long itemId) throws HeroNotFoudException, ItemNotFoundException, EquipmentNotFoundException {
+        Hero hero = heroService.getOne(heroId);
+        Item item = itemService.getOne(itemId);
+        return new ItemDTO(equipmentService.takeOfItem(hero, item));
+    }
+
+    //endregion
+
+    //region BACKPACK
 
     //endregion
 

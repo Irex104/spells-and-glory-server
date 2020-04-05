@@ -5,6 +5,7 @@ import kiec.ireneusz.spellsandgloryserver.domain.generator.GeneratorFacade;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroDTO;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.ItemDTO;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.UserDTO;
+import kiec.ireneusz.spellsandgloryserver.exception.ItemNotFoundException;
 import kiec.ireneusz.spellsandgloryserver.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class GeneratorController {
     }
 
     @GetMapping("/generateHeroes")
-    public ResponseEntity<List<HeroDTO>> generateHeroes() throws UserNotFoundException {
+    public ResponseEntity<List<HeroDTO>> generateHeroes() throws UserNotFoundException, ItemNotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED).body(generatorFacade.generateHeroes());
     }
 

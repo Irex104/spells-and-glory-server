@@ -6,6 +6,7 @@ import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroApi;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroDTO;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.HeroUpdateApi;
 import kiec.ireneusz.spellsandgloryserver.exception.HeroNotFoudException;
+import kiec.ireneusz.spellsandgloryserver.exception.ItemNotFoundException;
 import kiec.ireneusz.spellsandgloryserver.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,7 +57,7 @@ public class HeroController {
     @PostMapping("/create")
     public ResponseEntity<HeroDTO> create(
             @RequestBody HeroApi api
-    ) throws UserNotFoundException {
+    ) throws UserNotFoundException, ItemNotFoundException {
         return ResponseEntity.status(HttpStatus.CREATED).body(userFacade.createHero(api));
     }
 

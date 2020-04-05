@@ -2,7 +2,6 @@ package kiec.ireneusz.spellsandgloryserver.domain.user;
 
 import kiec.ireneusz.spellsandgloryserver.domain.user.model.Backpack;
 import kiec.ireneusz.spellsandgloryserver.domain.user.model.Hero;
-import kiec.ireneusz.spellsandgloryserver.domain.user.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +15,8 @@ public class BackpackService {
         this.repository = repository;
     }
 
-    Backpack create(Hero hero, Item firstItem) {
+    Backpack create(Hero hero) {
         Backpack backpack = new Backpack(hero);
-        backpack.addTo(firstItem);
         return repository.save(backpack);
     }
 }

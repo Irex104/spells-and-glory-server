@@ -5,7 +5,6 @@ import kiec.ireneusz.spellsandgloryserver.domain.user.model.Hero;
 import kiec.ireneusz.spellsandgloryserver.domain.user.model.Item;
 import kiec.ireneusz.spellsandgloryserver.enums.ItemType;
 import kiec.ireneusz.spellsandgloryserver.exception.EquipmentNotFoundException;
-import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,15 +34,22 @@ public class EquipmentService {
                 .orElseThrow(() -> new EquipmentNotFoundException());
     }
 
-    Equipment wearItem(Hero hero, Item item) throws EquipmentNotFoundException {
+    Item wearItem(Hero hero, Item item) throws EquipmentNotFoundException {
         Equipment equipment = this.getByHero(hero);
-        ItemType itemType = this.typeEquipmentItem(item);
-//        if(equipment.items.get(itemTypem).equals(NULL)) //TODO do hashmap, replace items under itemType, return old item if exist ald put it to backpack
+        ItemType itemType = this.typeOfEquipmentItem(item);
+//        if(equipment.getItems.get(itemType).equals(NULL)) //TODO do hashmap, replace items under itemType, return old item if exist ald put it to backpack
 //            equipment.items.replace(itemType, item)
         repository.save(equipment);
+        return item;
     }
 
-    private ItemType typeEquipmentItem(Item item) {
+    Item takeOfItem(Hero hero, Item item) throws EquipmentNotFoundException {
+        Equipment equipment = this.getByHero(hero);
+        //TODO ent that
+        return item;//TODO
+    }
+
+    private ItemType typeOfEquipmentItem(Item item) {
         if (item.getItemType().equals(ItemType.Helmet))
 //            equipment.setHelmet(item);
             return ItemType.Helmet;
