@@ -1,19 +1,14 @@
 package kiec.ireneusz.spellsandgloryserver.domain.user;
 
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.*;
-import kiec.ireneusz.spellsandgloryserver.domain.user.model.Backpack;
-import kiec.ireneusz.spellsandgloryserver.domain.user.model.Hero;
-import kiec.ireneusz.spellsandgloryserver.domain.user.model.Item;
-import kiec.ireneusz.spellsandgloryserver.domain.user.model.User;
+import kiec.ireneusz.spellsandgloryserver.domain.user.model.*;
 import kiec.ireneusz.spellsandgloryserver.enums.ItemType;
-import kiec.ireneusz.spellsandgloryserver.exception.EquipmentNotFoundException;
-import kiec.ireneusz.spellsandgloryserver.exception.HeroNotFoudException;
-import kiec.ireneusz.spellsandgloryserver.exception.ItemNotFoundException;
-import kiec.ireneusz.spellsandgloryserver.exception.UserNotFoundException;
+import kiec.ireneusz.spellsandgloryserver.exception.*;
 import kiec.ireneusz.spellsandgloryserver.utils.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +21,7 @@ public class UserFacade {
     private final EquipmentService equipmentService;
     private final BackpackService backpackService;
     private final Item2BackpackService item2BackpackService;
+    private final Item2EquipmentService item2EquipmentService;
 
     @Autowired
     public UserFacade(
@@ -34,7 +30,8 @@ public class UserFacade {
             ItemService itemService,
             EquipmentService equipmentService,
             BackpackService backpackService,
-            Item2BackpackService item2BackpackService
+            Item2BackpackService item2BackpackService,
+            Item2EquipmentService item2EquipmentService
     ) {
         this.userService = userService;
         this.heroService = heroService;
@@ -42,6 +39,7 @@ public class UserFacade {
         this.equipmentService = equipmentService;
         this.backpackService = backpackService;
         this.item2BackpackService = item2BackpackService;
+        this.item2EquipmentService = item2EquipmentService;
     }
 
     //region USER
@@ -105,7 +103,8 @@ public class UserFacade {
     public HeroDTO createHero(HeroApi api) throws UserNotFoundException, ItemNotFoundException {
         User user = userService.getOne(api.getUserId());
         Hero hero = heroService.create(user, api);
-        equipmentService.create(hero);
+        Equipment equipment = equipmentService.create(hero);
+        item2EquipmentService.createItemsSlots(equipment);
         Item firstItem = itemService.getFirstItem(hero);
         Backpack backpack = backpackService.create(hero);
         item2BackpackService.addItemToBackpack(backpack, firstItem);
@@ -171,19 +170,47 @@ public class UserFacade {
 
     public EquipmentDTO getEquipment(Long heroId) throws HeroNotFoudException, EquipmentNotFoundException {
         Hero hero = heroService.getOne(heroId);
-        return new EquipmentDTO(equipmentService.getByHero(hero));
+        Equipment equipment = equipmentService.getByHero(hero);
+//        HashMap<ItemType, ItemDTO> itemsDTOs = new HashMap<>();
+//        equipment.getItems().entrySet().stream()
+//                .forEach(e -> itemsDTOs.put(e.getKey(),new ItemDTO(e.getValue())));
+        ArrayList<Item> items = new ArrayList<>(equipment.getItems().values());
+        List<ItemDTO> itemDTOs = items.stream().map(Mapper::toItemDTOSimple).collect(Collectors.toList());
+        return new EquipmentDTO(equipment,itemDTOs);
     }
 
-    public ItemDTO wearItem(Long heroId, Long itemId) throws HeroNotFoudException, EquipmentNotFoundException, ItemNotFoundException {
+    public EquipmentDTO wearItem(Long heroId, Long itemId)
+            throws HeroNotFoudException,
+                    EquipmentNotFoundException,
+                    ItemNotFoundException,
+                    Item2EquipmentNotFoundException,
+                    BackpackNotFoudExeption {
         Hero hero = heroService.getOne(heroId);
+        Equipment equipment = equipmentService.getByHero(hero);
+        Backpack backpack = backpackService.getByHero(hero);
         Item item = itemService.getOne(itemId);
-        return new ItemDTO(equipmentService.wearItem(hero, item));
+        Long oldItemId = item2EquipmentService.wearItem(equipment, item);
+        if(oldItemId != null) {
+            Item oldItem = itemService.getOne(oldItemId);
+            item2BackpackService.addItemToBackpack(backpack, oldItem);
+        }
+        ArrayList<Item> items = new ArrayList<>(equipment.getItems().values());
+        List<ItemDTO> itemDTOs = items.stream().map(Mapper::toItemDTOSimple).collect(Collectors.toList());
+        return new EquipmentDTO(equipment,itemDTOs);
     }
 
-    public ItemDTO takeOfItem(Long heroId, Long itemId) throws HeroNotFoudException, ItemNotFoundException, EquipmentNotFoundException {
+    public EquipmentDTO takeOfItem(Long heroId, Long itemId)
+            throws HeroNotFoudException,
+                    ItemNotFoundException,
+                    EquipmentNotFoundException,
+                    Item2EquipmentNotFoundException {
         Hero hero = heroService.getOne(heroId);
+        Equipment equipment = equipmentService.getByHero(hero);
         Item item = itemService.getOne(itemId);
-        return new ItemDTO(equipmentService.takeOfItem(hero, item));
+        item2EquipmentService.takeOfItem(equipment, item);
+        ArrayList<Item> items = new ArrayList<>(equipment.getItems().values());
+        List<ItemDTO> itemDTOs = items.stream().map(Mapper::toItemDTOSimple).collect(Collectors.toList());
+        return new EquipmentDTO(equipment,itemDTOs);
     }
 
     //endregion

@@ -3,10 +3,7 @@ package kiec.ireneusz.spellsandgloryserver.api;
 import io.swagger.annotations.Api;
 import kiec.ireneusz.spellsandgloryserver.domain.user.UserFacade;
 import kiec.ireneusz.spellsandgloryserver.domain.user.dto.EquipmentDTO;
-import kiec.ireneusz.spellsandgloryserver.domain.user.dto.ItemDTO;
-import kiec.ireneusz.spellsandgloryserver.exception.EquipmentNotFoundException;
-import kiec.ireneusz.spellsandgloryserver.exception.HeroNotFoudException;
-import kiec.ireneusz.spellsandgloryserver.exception.ItemNotFoundException;
+import kiec.ireneusz.spellsandgloryserver.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,19 +36,19 @@ public class EquipmentController {
     }
 
     @GetMapping("/wearItem/{heroId}/{itemId}")
-    public ResponseEntity<ItemDTO> wearItem(
+    public ResponseEntity<EquipmentDTO> wearItem(
             @PathVariable Long heroId,
             @PathVariable Long itemId
-    ) throws HeroNotFoudException, EquipmentNotFoundException, ItemNotFoundException {
+    ) throws HeroNotFoudException, EquipmentNotFoundException, ItemNotFoundException, Item2EquipmentNotFoundException, BackpackNotFoudExeption {
         return ResponseEntity.ok(userFacade.wearItem(heroId, itemId));
     }
 
     //TODO WARNING it might be ERROR - Delete returns ResponseEntity
     @DeleteMapping("/takeOfItem/{heroId}/{itemId}")
-    public ResponseEntity<ItemDTO> takeOfItem(
+    public ResponseEntity<EquipmentDTO> takeOfItem(
             @PathVariable Long heroId,
             @PathVariable Long itemId
-    ) throws HeroNotFoudException, ItemNotFoundException, EquipmentNotFoundException {
+    ) throws HeroNotFoudException, ItemNotFoundException, EquipmentNotFoundException, Item2EquipmentNotFoundException {
         return ResponseEntity.ok(userFacade.takeOfItem(heroId, itemId));
     }
 

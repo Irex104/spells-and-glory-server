@@ -10,7 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "item2backpack")
+@Table(schema = "public", name = "item2backpack")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

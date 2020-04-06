@@ -7,8 +7,8 @@ public class ItemNotFoundException extends AppException {
     public ItemNotFoundException() {
         super(NOT_FOUND);
     }
-    public ItemNotFoundException(Long userId) {
-        super(NOT_FOUND_ID + userId);
+    public ItemNotFoundException(Long itemId) {
+        super(NOT_FOUND_ID + itemId);
     }
 
     public ItemNotFoundException(String message) {

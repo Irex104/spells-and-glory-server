@@ -3,7 +3,7 @@ package kiec.ireneusz.spellsandgloryserver.domain.user.model;
 import kiec.ireneusz.spellsandgloryserver.utils.AbstractModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Table(schema = "public", name = "backpacks")
 @Getter
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
 public class Backpack extends AbstractModel {
 
     @Id
@@ -38,15 +38,6 @@ public class Backpack extends AbstractModel {
 
     public Backpack(Hero hero) {
         this.hero = hero;
-    }
-
-    public void addTo(Item item){
-        this.items.add(item);
-    }
-
-    public Item removeFrom(Item item){
-        this.items.remove(item);
-        return item;
     }
 
     public void sortItems(){

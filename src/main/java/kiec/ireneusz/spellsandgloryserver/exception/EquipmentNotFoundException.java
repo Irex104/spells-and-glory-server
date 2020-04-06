@@ -7,8 +7,8 @@ public class EquipmentNotFoundException extends AppException {
     public EquipmentNotFoundException() {
         super(NOT_FOUND);
     }
-    public EquipmentNotFoundException(Long userId) {
-        super(NOT_FOUND_ID + userId);
+    public EquipmentNotFoundException(Long equipmentId) {
+        super(NOT_FOUND_ID + equipmentId);
     }
 
     public EquipmentNotFoundException(String message) {

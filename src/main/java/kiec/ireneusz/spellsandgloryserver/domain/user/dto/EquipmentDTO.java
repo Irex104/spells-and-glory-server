@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -19,48 +21,12 @@ public class EquipmentDTO {
     private Long heroId;
     private String heroName;
 
-    private Long helmetId;
-    private String helmetName;
-    private Long armorId;
-    private String armorName;
-    private Long glovesId;
-    private String glovesName;
-    private Long legsId;
-    private String legsName;
-    private Long shoesId;
-    private String shoesName;
+    private /*Map<ItemType, Item>*/List<ItemDTO> itemDTOs;
 
-    private Long ringId;
-    private String ringName;
-    private Long necklaceId;
-    private String necklaceName;
-
-    private Long weaponId;
-    private String weaponName;
-    private Long shieldId;
-    private String shieldName;
-
-    public EquipmentDTO(Equipment equipment) {
+    public EquipmentDTO(Equipment equipment,  /*Map<ItemType, Item>*/List<ItemDTO> itemDTOs) {
         this.id = equipment.getId();
-        this.helmetId = equipment.getHero().getId();
-        this.helmetName = equipment.getHero().getName();
-        this.helmetId = equipment.getHelmet().getId();
-        this.helmetName = equipment.getHelmet().getName();
-        this.armorId = equipment.getArmor().getId();
-        this.armorName = equipment.getArmor().getName();
-        this.glovesId = equipment.getGloves().getId();
-        this.glovesName = equipment.getGloves().getName();
-        this.legsId = equipment.getLegs().getId();
-        this.legsName = equipment.getLegs().getName();
-        this.shoesId = equipment.getShoes().getId();
-        this.shoesName = equipment.getShoes().getName();
-        this.ringId = equipment.getRing().getId();
-        this.ringName = equipment.getRing().getName();
-        this.necklaceId = equipment.getNecklace().getId();
-        this.necklaceName = equipment.getNecklace().getName();
-        this.weaponId = equipment.getWeapon().getId();
-        this.weaponName = equipment.getWeapon().getName();
-        this.shieldId = equipment.getShield().getId();
-        this.shieldName = equipment.getShield().getName();
+        this.heroId = equipment.getHero().getId();
+        this.heroName = equipment.getHero().getName();
+        this.itemDTOs = itemDTOs;
     }
 }

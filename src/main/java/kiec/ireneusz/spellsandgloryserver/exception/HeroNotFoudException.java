@@ -7,8 +7,8 @@ public class HeroNotFoudException extends AppException {
     public HeroNotFoudException() {
         super(NOT_FOUND);
     }
-    public HeroNotFoudException(Long userId) {
-        super(NOT_FOUND_ID + userId);
+    public HeroNotFoudException(Long heroId) {
+        super(NOT_FOUND_ID + heroId);
     }
 
     public HeroNotFoudException(String message) {
